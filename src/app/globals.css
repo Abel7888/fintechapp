@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b1220;
+  --card: #0f172a;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+}
+
+.container-px {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+.section {
+  @apply container-px max-w-7xl mx-auto;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-md bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 text-sm font-semibold shadow transition;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full bg-slate-800 text-slate-200 px-3 py-1 text-xs font-medium border border-slate-700;
+}
