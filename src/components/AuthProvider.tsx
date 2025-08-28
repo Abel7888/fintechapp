@@ -15,18 +15,31 @@ const AuthContext = createContext<AuthContextValue>({ user: null, loading: true,
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [warning, setWarning] = useState<string | null>(null)
 
   useEffect(() => {
-    const auth = getFirebaseAuth()
-    const unsub = onAuthStateChanged(auth, (u: User | null) => {
-      setUser(u)
+    let unsub: (() => void) | undefined
+    try {
+      const auth = getFirebaseAuth()
+      unsub = onAuthStateChanged(auth, (u: User | null) => {
+        setUser(u)
+        setLoading(false)
+      })
+    } catch (e: any) {
+      console.error('Firebase init failed. Check NEXT_PUBLIC_FIREBASE_* env vars.', e)
+      setWarning('Auth temporarily unavailable. Check Firebase env config.')
       setLoading(false)
-    })
-    return () => unsub()
+    }
+    return () => { if (unsub) unsub() }
   }, [])
 
   return (
     <AuthContext.Provider value={{ user, loading, signOut: async () => fbSignOut(getFirebaseAuth()) }}>
+      {warning && (
+        <div className="bg-amber-500/10 text-amber-300 border border-amber-500/30 text-xs px-3 py-2 text-center">
+          {warning}
+        </div>
+      )}
       {children}
     </AuthContext.Provider>
   )
