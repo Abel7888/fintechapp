@@ -77,6 +77,7 @@ function greeting(agent: AgentType) {
     "Regulation & Policy": "I track policies, guidance, and compliance implications.",
     "Valuation & Deal Structuring": "I benchmark multiples and propose deal mechanics.",
     "Investor Sentiment & Networking": "I gauge signal across networks and warm paths.",
+    "Cybersecurity": "I monitor threats, vulnerabilities, and control posture across your stack.",
   }
   return intros[agent]
 }
@@ -114,6 +115,11 @@ function respond(agent: AgentType, q: string) {
       "Syndicate appetite:",
       "Narrative resonance:",
       "Warm intros map:",
+    ],
+    "Cybersecurity": [
+      "Threat landscape:",
+      "Vulnerability exposure:",
+      "Control recommendations:",
     ],
   }
   const bullets = angle[agent]
